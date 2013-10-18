@@ -53,7 +53,7 @@ public class JaxbPlugin implements Plugin<Project> {
         project.dependencies {
             // FIXME group and version must be resolved dynamically (group is just nice to have, can hard code)
             // Could update a properties file at deployment with new version
-            antextension "no.entitas.gradle.jaxb:antextension:2.0"
+            antextension "de.tomask.gradle.jaxb:antextension:2.1"
         }
 
         project.convention.plugins.java.sourceSets.all { SourceSet sourceSet ->
