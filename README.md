@@ -1,7 +1,7 @@
 Gradle JAXB plugin
 ==================
 
-Fork of JaxB Gradle Plugin from [Stian Hegglund] (http://github.com/stianh/gradle-jaxb-plugin)
+Fork of Gradle JaxB Plugin from [Stian Hegglund] (http://github.com/stianh/gradle-jaxb-plugin)
 to deploy a 'released' version of latest HEAD in my [own public Github repository] (http://tomask-de.github.io/).
 
 
