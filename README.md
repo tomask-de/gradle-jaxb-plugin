@@ -10,6 +10,13 @@ Usage
 
     apply plugin: 'jaxb'
 
+    repositories {
+        maven {
+            url "https://github.com/tomask-de/tomask-de.github.com/raw/master/repo/releases"
+        }
+        mavenCentral()
+    }
+
     dependencies {
       jaxb 'com.sun.xml.bind:jaxb-xjc:2.2.4-1'
     }
@@ -17,10 +24,11 @@ Usage
     buildscript {
       repositories {
         maven {
-            http://tomask-de.github.com/repo/releases
+            url "https://github.com/tomask-de/tomask-de.github.com/raw/master/repo/releases"
         }
         mavenCentral()
       }
+
       dependencies {
         classpath 'de.tomask.gradle.jaxb:gradle-jaxb-plugin:2.1'
       }
