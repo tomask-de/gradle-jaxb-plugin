@@ -1,10 +1,12 @@
 subprojects {
     apply plugin: 'signing'
     apply plugin: 'maven'
+    apply plugin: 'maven-publish'
     apply plugin: 'java'
 
-    group = 'no.entitas.gradle.jaxb'
-    version = '2.0'
+    group = 'de.tomask.gradle.jaxb'
+    version = '2.1'
+    repoUrl = System.getProperty('repoUrl', "$buildDir/repo")
 
     repositories {
         mavenCentral()
@@ -41,13 +43,13 @@ task integrationTest(type: GradleBuild, dependsOn: build) {
         name 'Gradle JAXB plugin'
         // packaging 'jar' (Packaging is set later through direct modification of the xml)
         description 'The Gradle JAXB plugin creates Java classes from XSD schemas.'
-        url 'http://github.com/stianh/gradle-jaxb-plugin'
+        url 'http://github.com/tomask-de/gradle-jaxb-plugin'
         inceptionYear '2011'
 
         scm {
-            developerConnection 'git@github.com:stianh/gradle-jaxb-plugin.git'
-            connection 'git://github.com/stianh/gradle-jaxb-plugin.git'
-            url 'https://github.com/stianh/gradle-jaxb-plugin'
+            developerConnection 'git@github.com:tomask-de/gradle-jaxb-plugin.git'
+            connection 'git://github.com/tomask-de/gradle-jaxb-plugin.git'
+            url 'https://github.com/tomask-de/gradle-jaxb-plugin'
         }
 
         licenses {
@@ -80,42 +82,18 @@ task integrationTest(type: GradleBuild, dependsOn: build) {
         }
     }
 
-// TODO is this really needed? Think Sonatype do not have this as mandatory anymore
-    fixedProject = {
-        project defaultProject
-        withXml {
-            def project = it.asNode()
-            project.version[0] + {
-                packaging 'jar'
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+            }
+        }
+
+        repositories {
+            maven {
+                url "$repoUrl" 
             }
         }
     }
 
-    install.repositories.mavenInstaller {
-        pom fixedProject
-
-        beforeDeployment {
-            deployment -> signing.signPom(deployment)
-        }
-    }
-
-    uploadArchives.repositories.mavenDeployer {
-        pom fixedProject
-        uniqueVersion = false
-
-        beforeDeployment {
-            deployment -> signing.signPom(deployment)
-        }
-
-        if (!project.hasProperty('sonatypeUsername')) sonatypeUsername = ''
-        if (!project.hasProperty('sonatypePassword')) sonatypePassword = ''
-
-        snapshotRepository(url: 'https://oss.sonatype.org/content/repositories/snapshots/') {
-            authentication(userName: sonatypeUsername, password: sonatypePassword)
-        }
-
-        repository(url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2/') {
-            authentication(userName: sonatypeUsername, password: sonatypePassword)
-        }
-    }
 }
