@@ -5,8 +5,11 @@ subprojects {
     apply plugin: 'java'
 
     group = 'de.tomask.gradle.jaxb'
-    version = '2.2'
-    repoUrl = System.getProperty('repoUrl', "$buildDir/repo")
+    version = '2.3'
+
+    ext {
+       repoUrl = System.getProperty('repoUrl', "$buildDir/repo")
+    }
 
     repositories {
         mavenCentral()
@@ -39,7 +42,7 @@ task integrationTest(type: GradleBuild, dependsOn: build) {
         sign configurations.archives
     }
 
-    defaultProject = {
+    ext.defaultProject = {
         name 'Gradle JAXB plugin'
         // packaging 'jar' (Packaging is set later through direct modification of the xml)
         description 'The Gradle JAXB plugin creates Java classes from XSD schemas.'

@@ -82,7 +82,7 @@ public class JaxbPlugin implements Plugin<Project> {
         jaxbTask.group = GENERATE_GROUP
         jaxbTask.description = "Generates code from the ${sourceSet.name} JAXB schemas."
         jaxbTask.outputDirectory = generatedJavaDirFor(project, sourceSet)
-        jaxbTask.conventionMapping.defaultSource = { sourceSet.jaxb }
+        jaxbTask.conventionMapping.source = { sourceSet.jaxb }
         jaxbTask.conventionMapping.jaxbClasspath = {
             def jaxbClassPath = project.configurations.jaxb.copy()
             jaxbClassPath.transitive = true
